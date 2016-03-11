@@ -2,7 +2,6 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 public class BallPanel extends JPanel
 {
@@ -38,9 +37,9 @@ public class BallPanel extends JPanel
         g.fillRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
         g.setColor(Color.BLACK);
 
-        for (DrawableBall b : balls)
+        for (int i = 0; i < balls.size(); i++)
         {
-            b.draw(g);
+            balls.get(i).draw(g);
         }
     }
 
