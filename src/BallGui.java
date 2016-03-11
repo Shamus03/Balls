@@ -44,6 +44,8 @@ public class BallGui extends JFrame
             window.addBall(b);
         }
 
+        window.addBall(new TextBall(100, 0, 50, "Shamus"));
+
         window.setVisible(true);
     }
 

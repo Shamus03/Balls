@@ -8,21 +8,21 @@ public class BallPanel extends JPanel
     private static final int FRAME_SPEED = 10;
     public static final int BORDER_WIDTH = 5;
 
-    private ArrayList<DrawableBall> balls;
+    private ArrayList<Ball> balls;
     private Rectangle bounds;
     private boolean running;
 
     public BallPanel(int width, int height)
     {
         super();
-        balls = new ArrayList<DrawableBall>();
+        balls = new ArrayList<Ball>();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
     }
 
     public void addBall(Ball b)
     {
-        balls.add(new DrawableBall(b));
+        balls.add(b);
     }
 
     @Override
@@ -37,9 +37,18 @@ public class BallPanel extends JPanel
         g.fillRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
         g.setColor(Color.BLACK);
 
+        Ball b;
         for (int i = 0; i < balls.size(); i++)
         {
-            balls.get(i).draw(g);
+            b = balls.get(i);
+            if (b instanceof DrawableBall)
+            {
+                ((DrawableBall) b).draw(g);
+            }
+            else
+            {
+                new DrawableBall(b).draw(g);
+            }
         }
     }
 

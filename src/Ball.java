@@ -1,12 +1,12 @@
 public class Ball implements Collidable, Tickable
 {
     protected static final double DEFAULT_RADIUS = 30;
-    protected static final Vector GRAVITY = new Vector(0, .00001);
+    protected static final Vector GRAVITY = new Vector(0, .0005);
     protected static final double RESTITUTION = .9;
 
-    private Vector position;
-    private Vector velocity;
-    private double radius;
+    protected Vector position;
+    protected Vector velocity;
+    protected double radius;
 
     public Ball()
     {
@@ -69,7 +69,7 @@ public class Ball implements Collidable, Tickable
 
     public void tick(int delta)
     {
-        velocity = velocity.add(GRAVITY);
+        velocity = velocity.add(GRAVITY.scale(delta));
         position = position.add(velocity.scale(delta));
     }
 

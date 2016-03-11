@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class DrawableBall extends Ball implements Drawable
 {
@@ -24,6 +25,7 @@ public class DrawableBall extends Ball implements Drawable
 
     public void draw(Graphics g)
     {
+        g.setColor(Color.BLACK);
         g.fillOval( (int) (getPos().getX() - getRadius()),
                     (int) (getPos().getY() - getRadius()),
                     (int) (getRadius() + getRadius()),
