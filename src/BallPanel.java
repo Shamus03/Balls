@@ -18,11 +18,25 @@ public class BallPanel extends JPanel
         balls = new ArrayList<Ball>();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
+
+        setPreferredSize(new Dimension(width, height));
     }
 
     public void addBall(Ball b)
     {
         balls.add(b);
+    }
+
+    public double getTotalEnergy()
+    {
+        double sum = 0;
+
+        for (int i = balls.size() - 1; i >= 0; i--)
+        {
+            sum += balls.get(i).getEnergy();
+        }
+
+        return sum;
     }
 
     @Override
@@ -53,6 +67,11 @@ public class BallPanel extends JPanel
                 new DrawableBall(b).draw(g);
             }
         }
+
+        g.setXORMode(Color.WHITE);
+        g.drawString("Total Energy: " + getTotalEnergy(),
+            BORDER_WIDTH + 2, BORDER_WIDTH + 12);
+        g.setPaintMode();
     }
 
     public void tick(int delta)
@@ -63,19 +82,6 @@ public class BallPanel extends JPanel
             b = balls.get(i);
             b.tick(delta);
             b.checkBounds(bounds);
-        }
-    }
-
-    public void checkCollisions()
-    {
-        int i;
-        int j;
-        for (i = balls.size() - 1; i > 0; i--)
-        {
-            for (j = i - 1; j >= 0; j--)
-            {
-                balls.get(i).collide(balls.get(j));
-            }
         }
     }
 
@@ -113,6 +119,20 @@ public class BallPanel extends JPanel
                 lastTick = currentTime;
             }
         }
+
+        public void checkCollisions()
+        {
+            int i;
+            int j;
+            for (i = balls.size() - 1; i > 0; i--)
+            {
+                for (j = i - 1; j >= 0; j--)
+                {
+                    balls.get(i).collide(balls.get(j));
+                }
+            }
+        }
+
     }
 
     private class BallPanelDrawer implements Runnable

@@ -8,7 +8,6 @@ public class BallGui extends JFrame
 {
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 600;
-    protected static final int BOTTOM_PANEL_PADDING = 36;
 
     private static final int NUM_RANDOM_BALLS = 30;
 
@@ -48,7 +47,7 @@ public class BallGui extends JFrame
             window.addBall(b);
         }
 
-        window.addBall(new TextBall(100, 0, 50, "Shamus"));
+        window.addBall(new TextBall(100, 100, 50, "Shamus"));
 
         window.setVisible(true);
     }
@@ -56,17 +55,17 @@ public class BallGui extends JFrame
     public BallGui()
     {
         super("Ball GUI");
-
-        setSize(WIDTH, HEIGHT + BOTTOM_PANEL_PADDING);
-        setResizable(false);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
 
         ballPanel = new BallPanel(WIDTH, HEIGHT);
         JPanel controlPanel = new BallPanelControlPanel(ballPanel);
 
         add(ballPanel);
         add(controlPanel, BorderLayout.SOUTH);
+
+        pack();
+        setLocationRelativeTo(null);
 
         ballPanel.start();
     }

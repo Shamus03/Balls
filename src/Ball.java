@@ -67,6 +67,11 @@ public class Ball implements Collidable, Tickable
         return Math.PI * radius * radius;
     }
 
+    public double getEnergy()
+    {
+        return .5 * getMass() * Math.pow(velocity.getMagnitude(), 2);
+    }
+
     public void tick(int delta)
     {
         velocity = velocity.add(GRAVITY.scale(delta));
@@ -131,22 +136,42 @@ public class Ball implements Collidable, Tickable
 
     public void checkBounds(Rectangle bounds)
     {
-        if ((velocity.getX() < 0
-                && position.getX() - radius < bounds.getMinX()) ||
-            (velocity.getX() > 0
-                && position.getX() + radius > bounds.getMaxX()))
+        if (position.getX() < bounds.getMinX() + radius)
         {
-            velocity =
-                new Vector(-velocity.getX() * RESTITUTION, velocity.getY());
+            position = new Vector(bounds.getMinX() + radius, position.getY());
+            if (velocity.getX() < 0)
+            {
+                velocity = new Vector(-velocity.getX() * RESTITUTION,
+                    velocity.getY());
+            }
+        }
+        else if (position.getX() > bounds.getMaxX() - radius)
+        {
+            position = new Vector(bounds.getMaxX() - radius, position.getY());
+            if (velocity.getX() > 0)
+            {
+                velocity = new Vector(-velocity.getX() * RESTITUTION,
+                    velocity.getY());
+            }
         }
 
-        if ((velocity.getY() < 0
-                && position.getY() - radius < bounds.getMinY()) ||
-            (velocity.getY() > 0
-                && position.getY() + radius > bounds.getMaxY()))
+        if (position.getY() < bounds.getMinY() + radius)
         {
-            velocity =
-                new Vector(velocity.getX(), -velocity.getY() * RESTITUTION);
+            position = new Vector(position.getX(), bounds.getMinY() + radius);
+            if (velocity.getY() < 0)
+            {
+                velocity = new Vector(velocity.getX(),
+                    -velocity.getY() * RESTITUTION);
+            }
+        }
+        else if (position.getY() > bounds.getMaxY() - radius)
+        {
+            position = new Vector(position.getX(), bounds.getMaxY() - radius);
+            if (velocity.getY() > 0)
+            {
+                velocity = new Vector(velocity.getX(),
+                    -velocity.getY() * RESTITUTION);
+            }
         }
     }
 
