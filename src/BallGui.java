@@ -33,8 +33,12 @@ public class BallGui extends JFrame
         for (int i = 0; i < NUM_RANDOM_BALLS; i++)
         {
             randR = r.nextInt(RADIUS_MAX - RADIUS_MIN) + RADIUS_MIN;
-            randX = r.nextInt((int) (WIDTH - (randR + BallPanel.BORDER_WIDTH) * 2)) + randR + BallPanel.BORDER_WIDTH ;
-            randY = r.nextInt((int) (HEIGHT - (randR + BallPanel.BORDER_WIDTH) * 2)) + randR + BallPanel.BORDER_WIDTH;
+            randX = r.nextInt((int)
+                (WIDTH - (randR + BallPanel.BORDER_WIDTH) * 2))
+                + randR + BallPanel.BORDER_WIDTH ;
+            randY = r.nextInt((int)
+                (HEIGHT - (randR + BallPanel.BORDER_WIDTH) * 2))
+                + randR + BallPanel.BORDER_WIDTH;
             randVX = VEL_MAX * (r.nextDouble() * 2 - 1);
             randVY = VEL_MAX * (r.nextDouble() * 2 - 1);
 

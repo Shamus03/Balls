@@ -17,7 +17,8 @@ public class TextBall extends DrawableBall
     {
         FontMetrics metrics = g.getFontMetrics();
         int x = (int) position.getX() - metrics.stringWidth(text) / 2;
-        int y = (int) position.getY() - metrics.getHeight() / 2 + metrics.getAscent();
+        int y = (int) position.getY() - metrics.getHeight() / 2
+            + metrics.getAscent();
 
         super.draw(g);
         g.setXORMode(Color.WHITE);

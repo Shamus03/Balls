@@ -45,12 +45,15 @@ public class Rectangle
 
     public boolean isIntersecting(Rectangle other)
     {
-        return (this.getMinX() < other.getMaxX() && this.getMaxX() > other.getMinX())
-            && (this.getMinY() < other.getMaxY() && this.getMaxY() > other.getMinY());
+        return (this.getMinX() < other.getMaxX()
+            && this.getMaxX() > other.getMinX())
+            && (this.getMinY() < other.getMaxY()
+            && this.getMaxY() > other.getMinY());
     }
 
     public String toString()
     {
-        return String.format("Rectangle at (%d, %d) with dimensions %dx%d", x, y, width, height);
+        return String.format("Rectangle at (%d, %d) with dimensions %dx%d",
+            x, y, width, height);
     }
 }

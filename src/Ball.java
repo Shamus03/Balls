@@ -115,7 +115,8 @@ public class Ball implements Collidable, Tickable
             if (other instanceof Ball)
             {
                 Ball b = (Ball) other;
-                return this.getPos().subtract(b.getPos()).getMagnitude() < this.radius + b.radius;
+                return this.getPos().subtract(b.getPos()).getMagnitude()
+                    < this.radius + b.radius;
             }
         }
         return false;
@@ -130,16 +131,22 @@ public class Ball implements Collidable, Tickable
 
     public void checkBounds(Rectangle bounds)
     {
-        if ((velocity.getX() < 0 && position.getX() - radius < bounds.getMinX()) ||
-            (velocity.getX() > 0 && position.getX() + radius > bounds.getMaxX()))
+        if ((velocity.getX() < 0
+                && position.getX() - radius < bounds.getMinX()) ||
+            (velocity.getX() > 0
+                && position.getX() + radius > bounds.getMaxX()))
         {
-            velocity = new Vector(-velocity.getX() * RESTITUTION, velocity.getY());
+            velocity =
+                new Vector(-velocity.getX() * RESTITUTION, velocity.getY());
         }
 
-        if ((velocity.getY() < 0 && position.getY() - radius < bounds.getMinY()) ||
-            (velocity.getY() > 0 && position.getY() + radius > bounds.getMaxY()))
+        if ((velocity.getY() < 0
+                && position.getY() - radius < bounds.getMinY()) ||
+            (velocity.getY() > 0
+                && position.getY() + radius > bounds.getMaxY()))
         {
-            velocity = new Vector(velocity.getX(), -velocity.getY() * RESTITUTION);
+            velocity =
+                new Vector(velocity.getX(), -velocity.getY() * RESTITUTION);
         }
     }
 

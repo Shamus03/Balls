@@ -31,10 +31,13 @@ public class BallPanel extends JPanel
         super.paintComponent(g);
 
         g.setColor(Color.BLACK);
-        g.fillRect(bounds.getMinX() - BORDER_WIDTH, bounds.getMinY() - BORDER_WIDTH,
-            bounds.getWidth() + BORDER_WIDTH * 2, bounds.getHeight() + BORDER_WIDTH * 2);
+        g.fillRect( bounds.getMinX() - BORDER_WIDTH,
+                    bounds.getMinY() - BORDER_WIDTH,
+                    bounds.getWidth() + BORDER_WIDTH * 2,
+                    bounds.getHeight() + BORDER_WIDTH * 2);
         g.setColor(Color.WHITE);
-        g.fillRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
+        g.fillRect(bounds.getMinX(), bounds.getMinY(),
+            bounds.getWidth(), bounds.getHeight());
         g.setColor(Color.BLACK);
 
         Ball b;
