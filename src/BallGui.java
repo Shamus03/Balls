@@ -57,34 +57,10 @@ public class BallGui extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         ballPanel = new BallPanel(WIDTH, HEIGHT);
-
-        JPanel bottomPanel = new JPanel();
-
-        JButton startButton = new JButton("Start");
-        startButton.setEnabled(false);
-        JButton stopButton = new JButton("Stop");
-        startButton.addActionListener(e ->
-        {
-            ballPanel.start();
-            startButton.setEnabled(false);
-            stopButton.setEnabled(true);
-        });
-        stopButton.addActionListener(e ->
-        {
-            ballPanel.stop();
-            startButton.setEnabled(true);
-            stopButton.setEnabled(false);
-        });
-
-        JButton quitButton = new JButton("Quit");
-        quitButton.addActionListener(e -> System.exit(0));
-
-        bottomPanel.add(startButton);
-        bottomPanel.add(stopButton);
-        bottomPanel.add(quitButton);
+        JPanel controlPanel = new BallPanelControlPanel(ballPanel);
 
         add(ballPanel);
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(controlPanel, BorderLayout.SOUTH);
 
         ballPanel.start();
     }

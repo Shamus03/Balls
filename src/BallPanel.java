@@ -83,6 +83,11 @@ public class BallPanel extends JPanel
         running = false;
     }
 
+    public boolean isRunning()
+    {
+        return running;
+    }
+
     private class BallPanelTicker implements Runnable
     {
         public void run()
