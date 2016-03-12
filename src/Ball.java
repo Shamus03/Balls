@@ -1,8 +1,8 @@
 public class Ball implements Collidable, Tickable
 {
-    protected static final double DEFAULT_RADIUS = 30;
-    protected static final Vector GRAVITY = new Vector(0, .0005);
-    protected static final double RESTITUTION = .9;
+    private static final double DEFAULT_RADIUS = 30;
+    private static final Vector GRAVITY = new Vector(0, .0005);
+    private static final double RESTITUTION = .9;
 
     protected Vector position;
     protected Vector velocity;

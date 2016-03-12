@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class BallGui extends JFrame
 {
-    protected static final int WIDTH = 800;
-    protected static final int HEIGHT = 600;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
     private static final int NUM_RANDOM_BALLS = 30;
 
@@ -72,6 +72,13 @@ public class BallGui extends JFrame
 
     public void addBall(Ball b)
     {
-        ballPanel.addBall(b);
+        if (b instanceof DrawableBall)
+        {
+            ballPanel.addBall((DrawableBall) b);
+        }
+        else
+        {
+            ballPanel.addBall(new DrawableBall(b));
+        }
     }
 }

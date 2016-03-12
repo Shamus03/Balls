@@ -6,23 +6,25 @@ import java.awt.Dimension;
 public class BallPanel extends JPanel
 {
     private static final int FRAME_SPEED = 10;
-    public static final int BORDER_WIDTH = 5;
+    private static final int MIN_DELTA = 3;
 
-    private ArrayList<Ball> balls;
+    protected static final int BORDER_WIDTH = 3;
+
+    private ArrayList<DrawableBall> balls;
     private Rectangle bounds;
     private boolean running;
 
     public BallPanel(int width, int height)
     {
         super();
-        balls = new ArrayList<Ball>();
+        balls = new ArrayList<DrawableBall>();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
 
         setPreferredSize(new Dimension(width, height));
     }
 
-    public void addBall(Ball b)
+    public void addBall(DrawableBall b)
     {
         balls.add(b);
     }
@@ -52,22 +54,15 @@ public class BallPanel extends JPanel
         g.setColor(Color.WHITE);
         g.fillRect(bounds.getMinX(), bounds.getMinY(),
             bounds.getWidth(), bounds.getHeight());
-        g.setColor(Color.BLACK);
 
-        Ball b;
+        DrawableBall b;
         for (int i = 0; i < balls.size(); i++)
         {
-            b = balls.get(i);
-            if (b instanceof DrawableBall)
-            {
-                ((DrawableBall) b).draw(g);
-            }
-            else
-            {
-                new DrawableBall(b).draw(g);
-            }
+            b = (DrawableBall) balls.get(i);
+            b.draw(g);
         }
 
+        g.setColor(Color.BLACK);
         g.setXORMode(Color.WHITE);
         g.drawString("Total Energy: " + getTotalEnergy(),
             BORDER_WIDTH + 2, BORDER_WIDTH + 12);
@@ -111,12 +106,24 @@ public class BallPanel extends JPanel
         {
             long lastTick = System.currentTimeMillis();
             long currentTime;
-            while (running)
+            int delta;
+            try
             {
-                currentTime = System.currentTimeMillis();
-                tick((int) (currentTime - lastTick));
-                checkCollisions();
-                lastTick = currentTime;
+                while (running)
+                {
+                    currentTime = System.currentTimeMillis();
+                    delta = (int) (currentTime - lastTick);
+                    if (delta >= MIN_DELTA)
+                    {
+                        tick(delta);
+                        checkCollisions();
+                        lastTick = currentTime;
+                    }
+                    Thread.sleep(1);
+                }
+            }
+            catch (InterruptedException e)
+            {
             }
         }
 
@@ -139,17 +146,16 @@ public class BallPanel extends JPanel
     {
         public void run()
         {
-            long lastRedraw = System.currentTimeMillis();
-            long currentTime;
-            while (running)
+            try
             {
-                currentTime = System.currentTimeMillis();
-
-                if (currentTime - lastRedraw > FRAME_SPEED)
+                while (running)
                 {
                     repaint();
-                    lastRedraw = currentTime;
+                    Thread.sleep(FRAME_SPEED);
                 }
+            }
+            catch (InterruptedException e)
+            {
             }
         }
     }
