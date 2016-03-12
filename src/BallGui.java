@@ -9,7 +9,7 @@ public class BallGui extends JFrame
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private static final int NUM_RANDOM_BALLS = 5;
+    private static final int NUM_RANDOM_BALLS = 0;
 
     private static final int RADIUS_MIN = 10;
     private static final int RADIUS_MAX = 40;
@@ -24,12 +24,13 @@ public class BallGui extends JFrame
         Random r = new Random();
 
         Ball b;
+        int i;
         double randR;
         double randX;
         double randY;
         double randVX;
         double randVY;
-        for (int i = 0; i < NUM_RANDOM_BALLS; i++)
+        for (i = 0; i < NUM_RANDOM_BALLS; i++)
         {
             randR = r.nextInt(RADIUS_MAX - RADIUS_MIN) + RADIUS_MIN;
             randX = r.nextInt((int)
@@ -44,31 +45,33 @@ public class BallGui extends JFrame
             b = new Ball(randX, randY, randR);
             b.setVel(new Vector(randVX, randVY));
 
-            window.addBall(b);
+            window.addEntity(b);
         }
 
-        SpringBall b1 = new SpringBall(300, 200, 50);
-        SpringBall b2 = new SpringBall(400, 200, 50);
-        SpringBall b3 = new SpringBall(450, 250, 50);
-
-        double springConstant = .00000002;
+        int numBalls = 3;
+        double springConstant = 1;
         double springLength = 200;
 
-        b1.setSpringTarget(b2);
-        b1.setSpringConstant(springConstant);
-        b1.setSpringLength(springLength);
+        Ball[] balls = new Ball[numBalls];
 
-        b2.setSpringTarget(b3);
-        b2.setSpringConstant(springConstant);
-        b2.setSpringLength(springLength);
-
-        b3.setSpringTarget(b1);
-        b3.setSpringConstant(springConstant);
-        b3.setSpringLength(springLength);
-
-        window.addBall(b1);
-        window.addBall(b2);
-        window.addBall(b3);
+        for (i = 0; i < numBalls; i++)
+        {
+            balls[i] = new TextBall(100 + (50 * i), 200 + (10 * (i % 2)),
+                70, "Ball " + (i + 1));
+            window.addEntity(balls[i]);
+        }
+    
+        BallSpring spring;
+        int j;
+        for (i = 0; i < numBalls - 1; i++)
+        {
+            for (j = i + 1; j < numBalls; j++)
+            {
+                spring = new BallSpring(springConstant, springLength,
+                    balls[i], balls[j]);
+                window.addEntity(spring);
+            }
+        }
 
         window.setVisible(true);
     }
@@ -91,15 +94,8 @@ public class BallGui extends JFrame
         ballPanel.start();
     }
 
-    public void addBall(Ball b)
+    public void addEntity(Entity e)
     {
-        if (b instanceof DrawableBall)
-        {
-            ballPanel.addBall((DrawableBall) b);
-        }
-        else
-        {
-            ballPanel.addBall(new DrawableBall(b));
-        }
+        ballPanel.addEntity(e);
     }
 }

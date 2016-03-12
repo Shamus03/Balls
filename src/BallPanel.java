@@ -10,32 +10,32 @@ public class BallPanel extends JPanel
 
     protected static final int BORDER_WIDTH = 3;
 
-    private ArrayList<DrawableBall> balls;
+    private ArrayList<Entity> entities;
     private Rectangle bounds;
     private boolean running;
 
     public BallPanel(int width, int height)
     {
         super();
-        balls = new ArrayList<DrawableBall>();
+        entities = new ArrayList<Entity>();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
 
         setPreferredSize(new Dimension(width, height));
     }
 
-    public void addBall(DrawableBall b)
+    public void addEntity(Entity e)
     {
-        balls.add(b);
+        entities.add(e);
     }
 
     public double getTotalEnergy()
     {
         double sum = 0;
 
-        for (int i = balls.size() - 1; i >= 0; i--)
+        for (int i = entities.size() - 1; i >= 0; i--)
         {
-            sum += balls.get(i).getEnergy();
+            sum += entities.get(i).getEnergy();
         }
 
         return sum;
@@ -55,11 +55,9 @@ public class BallPanel extends JPanel
         g.fillRect(bounds.getMinX(), bounds.getMinY(),
             bounds.getWidth(), bounds.getHeight());
 
-        DrawableBall b;
-        for (int i = 0; i < balls.size(); i++)
+        for (int i = 0; i < entities.size(); i++)
         {
-            b = (DrawableBall) balls.get(i);
-            b.draw(g);
+            entities.get(i).draw(g);
         }
 
         g.setColor(Color.BLACK);
@@ -71,12 +69,15 @@ public class BallPanel extends JPanel
 
     public void tick(int delta)
     {
-        Ball b;
-        for (int i = balls.size() - 1; i >= 0; i--)
+        Entity e;
+        for (int i = entities.size() - 1; i >= 0; i--)
         {
-            b = balls.get(i);
-            b.tick(delta);
-            b.checkBounds(bounds);
+            e = entities.get(i);
+            e.tick(delta);
+            if (e instanceof Collidable)
+            {
+                ((Collidable) e).checkBounds(bounds);
+            }
         }
     }
 
@@ -131,11 +132,25 @@ public class BallPanel extends JPanel
         {
             int i;
             int j;
-            for (i = balls.size() - 1; i > 0; i--)
+            Entity e1;
+            Entity e2;
+            Collidable c1;
+            Collidable c2;
+            for (i = entities.size() - 1; i > 0; i--)
             {
-                for (j = i - 1; j >= 0; j--)
+                e1 = entities.get(i);
+                if (e1 instanceof Collidable)
                 {
-                    balls.get(i).collide(balls.get(j));
+                    c1 = (Collidable) e1;
+                    for (j = i - 1; j >= 0; j--)
+                    {
+                        e2 = entities.get(j);
+                        if (e2 instanceof Collidable)
+                        {
+                            c2 = (Collidable) e2;
+                            c1.collide(c2);
+                        }
+                    }
                 }
             }
         }

@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.FontMetrics;
 
-public class TextBall extends DrawableBall
+public class TextBall extends Ball
 {
     private String text;
 

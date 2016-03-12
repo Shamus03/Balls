@@ -41,6 +41,11 @@ public class Vector
         return new Vector(this.x * scalar, this.y * scalar);
     }
 
+    public Vector getUnitVector()
+    {
+        return this.scale(1 / getMagnitude());
+    }
+
     public double getMagnitude()
     {
         return Math.sqrt(x * x + y * y);

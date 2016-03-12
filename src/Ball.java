@@ -1,8 +1,11 @@
-public class Ball implements Collidable, Tickable
+import java.awt.Graphics;
+import java.awt.Color;
+
+public class Ball extends Entity implements Collidable
 {
     private static final double DEFAULT_RADIUS = 30;
-    private static final Vector GRAVITY = new Vector(0, .0005);
-    private static final double RESTITUTION = .9;
+    private static final Vector GRAVITY = new Vector(0, 0);//.0005);
+    private static final double RESTITUTION = 1;
 
     protected Vector position;
     protected Vector velocity;
@@ -76,6 +79,15 @@ public class Ball implements Collidable, Tickable
     {
         velocity = velocity.add(GRAVITY.scale(delta));
         position = position.add(velocity.scale(delta));
+    }
+
+    public void draw(Graphics g)
+    {
+        g.setColor(Color.BLACK);
+        g.fillOval( (int) (getPos().getX() - getRadius()),
+                    (int) (getPos().getY() - getRadius()),
+                    (int) (getRadius() + getRadius()),
+                    (int) (getRadius() + getRadius()));
     }
 
     public void collide(Collidable otherCollidable)
