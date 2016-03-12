@@ -5,7 +5,7 @@ public class DrawableBall extends Ball implements Drawable
 {
     public DrawableBall()
     {
-        super(new Vector(), new Vector(), DEFAULT_RADIUS);
+        super();
     }
 
     public DrawableBall(Ball b)
