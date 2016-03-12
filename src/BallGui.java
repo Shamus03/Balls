@@ -9,7 +9,7 @@ public class BallGui extends JFrame
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private static final int NUM_RANDOM_BALLS = 30;
+    private static final int NUM_RANDOM_BALLS = 5;
 
     private static final int RADIUS_MIN = 10;
     private static final int RADIUS_MAX = 40;
@@ -47,7 +47,12 @@ public class BallGui extends JFrame
             window.addBall(b);
         }
 
-        window.addBall(new TextBall(100, 100, 50, "Shamus"));
+        Ball b = new TextBall(100, 100, 50, "Shamus");
+        SpringBall b = new SpringBall(300, 200, 100);
+        b.setSpringTarget(b);
+
+        window.addBall(b);
+        window.addBall(s);
 
         window.setVisible(true);
     }
