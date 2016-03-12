@@ -47,12 +47,28 @@ public class BallGui extends JFrame
             window.addBall(b);
         }
 
-        Ball b = new TextBall(100, 100, 50, "Shamus");
-        SpringBall b = new SpringBall(300, 200, 100);
-        b.setSpringTarget(b);
+        SpringBall b1 = new SpringBall(300, 200, 50);
+        SpringBall b2 = new SpringBall(400, 200, 50);
+        SpringBall b3 = new SpringBall(450, 250, 50);
 
-        window.addBall(b);
-        window.addBall(s);
+        double springConstant = .00000002;
+        double springLength = 200;
+
+        b1.setSpringTarget(b2);
+        b1.setSpringConstant(springConstant);
+        b1.setSpringLength(springLength);
+
+        b2.setSpringTarget(b3);
+        b2.setSpringConstant(springConstant);
+        b2.setSpringLength(springLength);
+
+        b3.setSpringTarget(b1);
+        b3.setSpringConstant(springConstant);
+        b3.setSpringLength(springLength);
+
+        window.addBall(b1);
+        window.addBall(b2);
+        window.addBall(b3);
 
         window.setVisible(true);
     }
