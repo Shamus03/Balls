@@ -22,7 +22,7 @@ public class BallPanelControlPanel extends JPanel
         stopButton.addActionListener(new StopButtonListener());
 
         JButton quitButton = new JButton("Quit");
-        quitButton.addActionListener(e -> System.exit(0));
+        quitButton.addActionListener(new QuitButtonListener());
 
         add(startButton);
         add(stopButton);
@@ -61,6 +61,14 @@ public class BallPanelControlPanel extends JPanel
         {
             ballPanel.stop();
             updateButtons();
+        }
+    }
+
+    private class QuitButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            System.exit(0);
         }
     }
 }
