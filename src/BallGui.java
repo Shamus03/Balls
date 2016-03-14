@@ -48,16 +48,23 @@ public class BallGui extends JFrame
             window.addEntity(b);
         }
 
-        int numBalls = 2;
-        double springConstant = 1;
-        double springLength = 200;
+        int numBalls = 5;
+        int ballRadius = 50;
+        double bodyRadius = 120;
+        double springConstant = .8;
+
+        double centerX = WIDTH / 2;
+        double centerY = HEIGHT / 2;
 
         Ball[] balls = new Ball[numBalls];
+        double angle;
 
         for (i = 0; i < numBalls; i++)
         {
-            balls[i] = new TextBall(100 + (50 * i), 200 + (10 * (i % 2)),
-                70, "Ball " + (i + 1));
+            angle = 2 * Math.PI * i / numBalls;
+            balls[i] = new TextBall(centerX + bodyRadius * Math.cos(angle),
+                centerY + bodyRadius * Math.sin(angle), ballRadius,
+                "Ball " + (i + 1));
             window.addEntity(balls[i]);
         }
     
@@ -67,8 +74,7 @@ public class BallGui extends JFrame
         {
             for (j = i + 1; j < numBalls; j++)
             {
-                spring = new BallSpring(springConstant, springLength,
-                    balls[i], balls[j]);
+                spring = new BallSpring(springConstant, balls[i], balls[j]);
                 window.addEntity(spring);
             }
         }

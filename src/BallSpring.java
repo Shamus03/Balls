@@ -16,6 +16,14 @@ public class BallSpring extends Entity
         this.b2 = b2;
     }
 
+    public BallSpring(double constant, Ball b1, Ball b2)
+    {
+        springConstant = constant;
+        this.b1 = b1;
+        this.b2 = b2;
+        setSpringLength();
+    }
+
     public void setSpringConstant(double s)
     {
         springConstant = s;
@@ -24,6 +32,14 @@ public class BallSpring extends Entity
     public void setSpringLength(double l)
     {
         springLength = l;
+    }
+
+    public void setSpringLength()
+    {
+        if (b1 == null || b2 == null)
+            return;
+
+        springLength = b1.getPos().subtract(b2.getPos()).getMagnitude();
     }
 
     public double getSpringConstant()

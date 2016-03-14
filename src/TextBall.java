@@ -6,7 +6,7 @@ public class TextBall extends Ball
 {
     private String text;
 
-    public TextBall(int x, int y, int radius, String text)
+    public TextBall(double x, double y, double radius, String text)
     {
         super(x, y, radius);
         this.text = text;
