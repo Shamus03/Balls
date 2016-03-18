@@ -3,9 +3,12 @@ import java.awt.Color;
 
 public class Ball extends Entity implements Collidable
 {
+    // TODO: Make these per-scene
     private static final double DEFAULT_RADIUS = 30;
     private static final Vector GRAVITY = new Vector(0, 0);//.0005);
     private static final double RESTITUTION = 1;
+    private static final double KINETIC_FRICTION = 0; //.00001;
+    private static final double STATIC_FRICTION = 0; //.00002;
 
     protected Vector position;
     protected Vector velocity;
@@ -78,7 +81,21 @@ public class Ball extends Entity implements Collidable
     public void tick(int delta)
     {
         velocity = velocity.add(GRAVITY.scale(delta));
-        position = position.add(velocity.scale(delta));
+        double speed = velocity.getMagnitude();
+        if (speed != 0)
+        {
+            if (speed < STATIC_FRICTION)
+            {
+                velocity = new Vector(0, 0);
+            }
+            else
+            {
+                double kineticFrictionScalar =
+                    (speed - KINETIC_FRICTION) / speed;
+                velocity = velocity.scale(kineticFrictionScalar);
+            }
+            position = position.add(velocity.scale(delta));
+        }
     }
 
     public void draw(Graphics g)

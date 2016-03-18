@@ -27,6 +27,12 @@
         <java jar="${jarDir}/${jarFile}" fork="true"/>
     </target>
 
+    <target name="runargs" depends="jar">
+        <java jar="${jarDir}/${jarFile}" fork="true">
+            <arg line="${args}"/>
+        </java>
+    </target>
+
     <target name="clean" depends="init">
         <delete dir="${outputDir}" quiet="true"/>
         <delete dir="${jarDir}" quiet="true"/>

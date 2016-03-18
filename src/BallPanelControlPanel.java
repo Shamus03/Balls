@@ -2,6 +2,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class BallPanelControlPanel extends JPanel
 {
@@ -15,15 +16,18 @@ public class BallPanelControlPanel extends JPanel
 
         this.ballPanel = ballPanel;
 
+    
+        JButton loadButton = new JButton("Load");
         startButton = new JButton("Start");
         stopButton = new JButton("Stop");
+        JButton quitButton = new JButton("Quit");
 
+        loadButton.addActionListener(new LoadButtonListener());
         startButton.addActionListener(new StartButtonListener());
         stopButton.addActionListener(new StopButtonListener());
-
-        JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(new QuitButtonListener());
 
+        add(loadButton);
         add(startButton);
         add(stopButton);
         add(quitButton);
@@ -36,13 +40,21 @@ public class BallPanelControlPanel extends JPanel
         updateButtons();
     }
 
-    private void updateButtons()
+    public void updateButtons()
     {
         if (ballPanel != null)
         {
             boolean running = ballPanel.isRunning();
             startButton.setEnabled(!running);
             stopButton.setEnabled(running);
+        }
+    }
+
+    private class LoadButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            ballPanel.chooseSceneFile();
         }
     }
 
