@@ -8,19 +8,28 @@ public class BallSpring extends Entity
     private Ball b1;
     private Ball b2;
 
-    public BallSpring(double constant, double length, Ball b1, Ball b2)
+    public BallSpring(Ball b1, Ball b2, double constant, double length)
     {
+        this.b1 = b1;
+        this.b2 = b2;
         springConstant = constant;
         springLength = length;
-        this.b1 = b1;
-        this.b2 = b2;
     }
 
-    public BallSpring(double constant, Ball b1, Ball b2)
+    public BallSpring(Ball b1, Ball b2, double constant)
     {
-        springConstant = constant;
         this.b1 = b1;
         this.b2 = b2;
+        springConstant = constant;
+        setSpringLength();
+    }
+
+    
+    public BallSpring(Ball b1, Ball b2)
+    {
+        this.b1 = b1;
+        this.b2 = b2;
+        springConstant = 0;
         setSpringLength();
     }
 
