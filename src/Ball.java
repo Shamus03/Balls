@@ -78,9 +78,9 @@ public class Ball extends Entity implements Collidable
         return .5 * getMass() * Math.pow(velocity.getMagnitude(), 2);
     }
 
-    public void tick(int delta)
+    public void tick()
     {
-        velocity = velocity.add(GRAVITY.scale(delta));
+        velocity = velocity.add(GRAVITY);
         double speed = velocity.getMagnitude();
         if (speed != 0)
         {
@@ -94,7 +94,7 @@ public class Ball extends Entity implements Collidable
                     (speed - KINETIC_FRICTION) / speed;
                 velocity = velocity.scale(kineticFrictionScalar);
             }
-            position = position.add(velocity.scale(delta));
+            position = position.add(velocity);
         }
     }
 

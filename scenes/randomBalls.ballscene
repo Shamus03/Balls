@@ -1,4 +1,4 @@
 # randomBall minRadius maxRadius maxVel
 seed 21013451
 repeat 20
-    randomBall 10 40 .1
+    randomBall 10 40 .2

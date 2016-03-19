@@ -68,7 +68,7 @@ public class BallSpring extends Entity
         return .5 * springConstant * springStretch * springStretch;
     }
 
-    public void tick(int delta)
+    public void tick()
     {
         if (b1 == null || b2 == null)
             return;
@@ -79,9 +79,9 @@ public class BallSpring extends Entity
             springConstant * (springLength - difference.getMagnitude()));
         
         b1.velocity = b1.velocity.add(
-            springAccel.scale(delta / b1.getMass()));
+            springAccel.scale(1 / b1.getMass()));
         b2.velocity = b2.velocity.subtract(
-            springAccel.scale(delta / b2.getMass()));
+            springAccel.scale(1 / b2.getMass()));
     }
 
     public void draw(Graphics g)

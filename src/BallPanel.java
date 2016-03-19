@@ -14,7 +14,7 @@ public class BallPanel extends JPanel
     private static final char COMMENT_CHARACTER = '#';
 
     private static final int FRAME_SPEED = 10;
-    private static final int MIN_DELTA = 3;
+    private static final int TICK_DELAY = 1;
 
     protected static final int BORDER_WIDTH = 3;
 
@@ -83,13 +83,13 @@ public class BallPanel extends JPanel
         g.setPaintMode();
     }
 
-    public void tick(int delta)
+    public void tick()
     {
         Entity e;
         for (int i = entities.size() - 1; i >= 0; i--)
         {
             e = entities.get(i);
-            e.tick(delta);
+            e.tick();
             if (e instanceof Collidable)
             {
                 ((Collidable) e).checkBounds(bounds);
@@ -280,22 +280,13 @@ public class BallPanel extends JPanel
     {
         public void run()
         {
-            long lastTick = System.currentTimeMillis();
-            long currentTime;
-            int delta;
             try
             {
                 while (running)
                 {
-                    currentTime = System.currentTimeMillis();
-                    delta = (int) (currentTime - lastTick);
-                    if (delta >= MIN_DELTA)
-                    {
-                        tick(delta);
-                        checkCollisions();
-                        lastTick = currentTime;
-                    }
-                    Thread.sleep(1);
+                    tick();
+                    checkCollisions();
+                    Thread.sleep(TICK_DELAY);
                 }
             }
             catch (InterruptedException e)

@@ -4,13 +4,11 @@
         <property name="outputDir" value="bin"/>
         <property name="jarDir" value="jar"/>
         <property name="jarFile" value="Balls.jar"/>
-        <property name="resourcesDir" value="resources"/>
     </target>
 
     <target name="jar" depends="build">
         <jar destfile="${jarDir}/${jarFile}">
             <fileset dir="${outputDir}"/>
-            <fileset dir="." includes="${resourcesDir}/**"/>
             <manifest>
                 <attribute name="Main-Class" value="BallGui"/>
             </manifest>
