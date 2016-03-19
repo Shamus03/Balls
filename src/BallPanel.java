@@ -19,18 +19,21 @@ public class BallPanel extends JPanel
     protected static final int BORDER_WIDTH = 3;
 
     private ArrayList<Entity> entities;
+    private MassSystem system;
     private Rectangle bounds;
     private boolean running;
+    private boolean drawSystem;
 
     private Random generator;
 
     public BallPanel(int width, int height)
     {
         super();
-        entities = new ArrayList<Entity>();
+        clearEntities();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
         generator = new Random();
+        drawSystem = true;
 
         setPreferredSize(new Dimension(width, height));
     }
@@ -38,11 +41,13 @@ public class BallPanel extends JPanel
     public void addEntity(Entity e)
     {
         entities.add(e);
+        system.add(e);
     }
 
     public void clearEntities()
     {
         entities = new ArrayList<Entity>();
+        system = new MassSystem();
     }
 
     public double getTotalEnergy()
@@ -75,6 +80,10 @@ public class BallPanel extends JPanel
         {
             entities.get(i).draw(g);
         }
+        if (drawSystem)
+        {
+            system.draw(g);
+        }
 
         g.setColor(Color.BLACK);
         g.setXORMode(Color.WHITE);
@@ -94,6 +103,10 @@ public class BallPanel extends JPanel
             {
                 ((Collidable) e).checkBounds(bounds);
             }
+        }
+        if (drawSystem)
+        {
+            system.tick();
         }
     }
 
@@ -207,6 +220,16 @@ public class BallPanel extends JPanel
                             {
                                 e.printStackTrace();
                             }
+                        }
+                        else if (words[0].equals("drawSystem")
+                                && words.length > 1)
+                        {
+                            drawSystem = Boolean.parseBoolean(words[1]);
+                        }
+                        else
+                        {
+                            System.out.println(words[0]
+                                + " is not a valid scene parameter.");
                         }
                     }
                 }

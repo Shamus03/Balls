@@ -60,12 +60,28 @@ public class BallSpring extends Entity
     {
         return springLength;
     }
+
+    public Vector getPos()
+    {
+        return new Vector(0, 0);
+    }
+
+    public Vector getVel()
+    {
+        return new Vector(0, 0);
+    }
     
     public double getEnergy()
     {
         double springStretch = springLength
             - b1.position.subtract(b2.position).getMagnitude();
         return .5 * springConstant * springStretch * springStretch;
+    }
+
+    public double getMass()
+    {
+        // Ideal springs are massless
+        return 0;
     }
 
     public void tick()

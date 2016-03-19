@@ -1,4 +1,5 @@
 # randomBall minRadius maxRadius maxVel
 seed 21013451
+drawSystem true
 repeat 20
     randomBall 10 40 .2
