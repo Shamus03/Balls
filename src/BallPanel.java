@@ -24,7 +24,7 @@ public class BallPanel extends JPanel
         clearEntities();
         bounds = new Rectangle(BORDER_WIDTH, BORDER_WIDTH,
             width - BORDER_WIDTH * 2, height - BORDER_WIDTH * 2);
-        drawSystem = true;
+        drawSystem = false;
         sceneSelector = new SceneSelector(this);
         gravity = new Vector(0, 0);
 
