@@ -63,6 +63,12 @@ public class MassSystem extends Entity
 
     public double getEnergy()
     {
+        // The system itself has no energy, but the Entities within do
+        return 0;
+    }
+
+    public double getTotalEnergy()
+    {
         double totalEnergy = 0;
         for (int i = 0; i < system.size(); i++)
         {

@@ -103,6 +103,10 @@ public class SceneSelector
                         {
                             addSpring(words, namedEntities);
                         }
+                        else if (words[0].equals("system"))
+                        {
+                            addSystem(words, namedEntities);
+                        }
                         else if (words[0].equals("seed") && words.length > 1)
                         {
                             try
@@ -237,5 +241,22 @@ public class SceneSelector
             System.out.println("Named entities " + words[1]
                 + " and " + words[2] + " do not exist");
         }
+    }
+
+    private void addSystem(String[] words, Map namedEntities)
+    {
+        MassSystem system = new MassSystem();
+        for (int i = 1; i < words.length; i++)
+        {
+            if (namedEntities.containsKey(words[i]))
+            {
+                system.add((Entity) namedEntities.get(words[i]));
+            }
+            else
+            {
+                System.out.println("No entity with name " + words[i]);
+            }
+        }
+        panel.addEntity(system);
     }
 }

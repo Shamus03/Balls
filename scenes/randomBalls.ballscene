@@ -1,4 +1,4 @@
-# randomBall minRadius maxRadius maxVel
+# Shows 20 random balls and the center of mass of the system
 seed 21013451
 drawSystem true
 repeat 20

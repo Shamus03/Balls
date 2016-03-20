@@ -1,0 +1,6 @@
+# A spring with a target length smaller than the two balls'
+# combined radii will pull the balls into each other at the moment
+drawSystem false
+ball 350 300 0 0 50 b1
+ball 450 300 0 0 50 b2
+spring b1 b2 1 50

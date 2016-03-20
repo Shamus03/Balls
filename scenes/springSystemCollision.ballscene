@@ -1,5 +1,12 @@
+# A collision on a system of balls should be similar to a collision
+# on a single ball with mass equal to the combined mass of the system
 drawSystem false
-ball 100 300 .2 0 50
-ball 400 300 0 0 50 ball1
-ball 550 300 0 0 50 ball2
-spring ball1 ball2 1
+
+ball 100 200 .2 0 50
+ball 425 200 0 0 75 b1
+ball 575 200 0 0 50 b2
+spring b1 b2 100
+system b1 b2
+
+ball 100 400 .2 0 50
+ball 440 400 0 0 90.14

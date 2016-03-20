@@ -1,4 +1,5 @@
-drawSystem false
+# Standard newton's cradle in a zero-gravity environment
+drawSystem true
 ball 100 300 .2 0 50
 ball 300 300 0 0 50
 ball 400 300 0 0 50

@@ -1,3 +1,5 @@
+# A large ball pressing a small ball against a wall will
+# eventually be pushed back from the repeated collisions
 drawSystem false
 ball 200 300 .1 0 150
 ball 400 300 0 0 10
