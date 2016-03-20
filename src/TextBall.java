@@ -1,6 +1,6 @@
-import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 
 public class TextBall extends Ball
 {

@@ -1,5 +1,5 @@
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class BallSpring extends Entity
 {
