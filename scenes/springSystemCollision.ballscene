@@ -1,0 +1,5 @@
+drawSystem false
+ball 100 300 .2 0 50
+ball 400 300 0 0 50 ball1
+ball 550 300 0 0 50 ball2
+spring ball1 ball2 1

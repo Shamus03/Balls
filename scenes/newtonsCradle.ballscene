@@ -1,0 +1,6 @@
+drawSystem false
+ball 100 300 .2 0 50
+ball 300 300 0 0 50
+ball 400 300 0 0 50
+ball 500 300 0 0 50
+ball 600 300 0 0 50

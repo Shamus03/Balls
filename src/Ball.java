@@ -10,9 +10,9 @@ public class Ball extends Entity implements Collidable
     private static final double KINETIC_FRICTION = 0; //.00001;
     private static final double STATIC_FRICTION = 0; //.00002;
 
-    protected Vector position;
-    protected Vector velocity;
-    protected double radius;
+    private Vector position;
+    private Vector velocity;
+    private double radius;
 
     public Ball()
     {

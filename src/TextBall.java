@@ -16,8 +16,8 @@ public class TextBall extends Ball
     public void draw(Graphics g)
     {
         FontMetrics metrics = g.getFontMetrics();
-        int x = (int) position.getX() - metrics.stringWidth(text) / 2;
-        int y = (int) position.getY() - metrics.getHeight() / 2
+        int x = (int) getPos().getX() - metrics.stringWidth(text) / 2;
+        int y = (int) getPos().getY() - metrics.getHeight() / 2
             + metrics.getAscent();
 
         super.draw(g);

@@ -42,6 +42,8 @@ public class SceneSelector
         panel.clearEntities();
         try (Scanner scan = new Scanner(inFile))
         {
+            Map<String, Entity> namedEntities = new Map<String, Entity>();
+
             String line = "";
             int repeat = 0;
             String[] words;
@@ -95,7 +97,11 @@ public class SceneSelector
                         }
                         else if (words[0].equals("ball") && words.length > 5)
                         {
-                            addBall(words);
+                            addBall(words, namedEntities);
+                        }
+                        else if (words[0].equals("spring") && words.length > 3)
+                        {
+                            addSpring(words, namedEntities);
                         }
                         else if (words[0].equals("seed") && words.length > 1)
                         {
@@ -166,7 +172,7 @@ public class SceneSelector
         }
     }
 
-    private void addBall(String[] words)
+    private void addBall(String[] words, Map namedEntities)
     {
         try
         {
@@ -180,10 +186,56 @@ public class SceneSelector
                               new Vector(xVel, yVel),
                               radius);
             panel.addEntity(b);
+
+            if (words.length > 6)
+            {
+                namedEntities.put(words[6], b);
+            }
         }
         catch (NumberFormatException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private void addSpring(String[] words, Map namedEntities)
+    {
+        if (namedEntities.containsKey(words[1])
+            && namedEntities.containsKey(words[2]))
+        {
+            Entity e1 = (Entity) namedEntities.get(words[1]);
+            Entity e2 = (Entity) namedEntities.get(words[2]);
+            Spring spring;
+
+            try
+            {
+                double springConstant =
+                    Double.parseDouble(words[3]);
+
+                if (words.length > 4)
+                {
+                    double springLength =
+                        Double.parseDouble(words[4]);
+                    spring = new Spring(e1, e2,
+                        springConstant, springLength);
+                }
+                else
+                {
+                    spring = new Spring(e1, e2,
+                        springConstant);
+                }
+
+                panel.addEntity(spring);
+            }
+            catch (NumberFormatException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            System.out.println("Named entities " + words[1]
+                + " and " + words[2] + " do not exist");
         }
     }
 }

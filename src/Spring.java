@@ -1,14 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class BallSpring extends Entity
+public class Spring extends Entity
 {
     private double springConstant;
     private double springLength;
-    private Ball b1;
-    private Ball b2;
+    private Entity b1;
+    private Entity b2;
 
-    public BallSpring(Ball b1, Ball b2, double constant, double length)
+    public Spring(Entity b1, Entity b2, double constant, double length)
     {
         this.b1 = b1;
         this.b2 = b2;
@@ -16,7 +16,7 @@ public class BallSpring extends Entity
         springLength = length;
     }
 
-    public BallSpring(Ball b1, Ball b2, double constant)
+    public Spring(Entity b1, Entity b2, double constant)
     {
         this.b1 = b1;
         this.b2 = b2;
@@ -25,7 +25,7 @@ public class BallSpring extends Entity
     }
 
     
-    public BallSpring(Ball b1, Ball b2)
+    public Spring(Entity b1, Entity b2)
     {
         this.b1 = b1;
         this.b2 = b2;
@@ -74,7 +74,7 @@ public class BallSpring extends Entity
     public double getEnergy()
     {
         double springStretch = springLength
-            - b1.position.subtract(b2.position).getMagnitude();
+            - b1.getPos().subtract(b2.getPos()).getMagnitude();
         return .5 * springConstant * springStretch * springStretch;
     }
 
@@ -89,15 +89,13 @@ public class BallSpring extends Entity
         if (b1 == null || b2 == null)
             return;
 
-        Vector difference = b1.position.subtract(b2.position);
+        Vector difference = b1.getPos().subtract(b2.getPos());
 
         Vector springAccel = difference.getUnitVector().scale(
             springConstant * (springLength - difference.getMagnitude()));
         
-        b1.velocity = b1.velocity.add(
-            springAccel.scale(1 / b1.getMass()));
-        b2.velocity = b2.velocity.subtract(
-            springAccel.scale(1 / b2.getMass()));
+        b1.setVel(b1.getVel().add(springAccel.scale(1 / b1.getMass())));
+        b2.setVel(b2.getVel().subtract(springAccel.scale(1 / b2.getMass())));
     }
 
     public void draw(Graphics g)
