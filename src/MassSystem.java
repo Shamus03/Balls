@@ -22,6 +22,7 @@ public class MassSystem extends Entity
     {
         system.add(e);
         changed = true;
+        tick();
     }
 
     public void tick()

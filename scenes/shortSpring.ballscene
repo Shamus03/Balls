@@ -1,5 +1,5 @@
 # A spring with a target length smaller than the two balls'
-# combined radii will pull the balls into each other at the moment
+# combined radii will pull the balls into each other creating tension
 drawSystem false
 ball 350 300 0 0 50 b1
 ball 450 300 0 0 50 b2

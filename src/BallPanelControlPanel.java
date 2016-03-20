@@ -9,6 +9,7 @@ public class BallPanelControlPanel extends JPanel
     private BallPanel ballPanel;
     private JButton startButton;
     private JButton stopButton;
+    private JButton tickButton;
 
     public BallPanelControlPanel(BallPanel ballPanel)
     {
@@ -20,16 +21,19 @@ public class BallPanelControlPanel extends JPanel
         JButton loadButton = new JButton("Load");
         startButton = new JButton("Start");
         stopButton = new JButton("Stop");
+        tickButton = new JButton("Tick");
         JButton quitButton = new JButton("Quit");
 
         loadButton.addActionListener(new LoadButtonListener());
         startButton.addActionListener(new StartButtonListener());
         stopButton.addActionListener(new StopButtonListener());
+        tickButton.addActionListener(new TickButtonListener());
         quitButton.addActionListener(new QuitButtonListener());
 
         add(loadButton);
         add(startButton);
         add(stopButton);
+        add(tickButton);
         add(quitButton);
     }
 
@@ -46,6 +50,7 @@ public class BallPanelControlPanel extends JPanel
         {
             boolean running = ballPanel.isRunning();
             startButton.setEnabled(!running);
+            tickButton.setEnabled(!running);
             stopButton.setEnabled(running);
         }
     }
@@ -63,7 +68,6 @@ public class BallPanelControlPanel extends JPanel
         public void actionPerformed(ActionEvent e)
         {
             ballPanel.start();
-            updateButtons();
         }
     }
 
@@ -72,7 +76,14 @@ public class BallPanelControlPanel extends JPanel
         public void actionPerformed(ActionEvent e)
         {
             ballPanel.stop();
-            updateButtons();
+        }
+    }
+
+    private class TickButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            ballPanel.tick();
         }
     }
 

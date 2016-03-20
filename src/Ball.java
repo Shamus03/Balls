@@ -3,27 +3,25 @@ import java.awt.Graphics;
 
 public class Ball extends Entity implements Collidable
 {
-    // TODO: Make these per-scene
-    private static final double DEFAULT_RADIUS = 30;
-    private static final Vector GRAVITY = new Vector(0, 0);//.0005);
-    private static final double RESTITUTION = 1;
-    private static final double KINETIC_FRICTION = 0; //.00001;
-    private static final double STATIC_FRICTION = 0; //.00002;
+    private static double defaultRestitution = 1;
+    private static double defaultFrictionK = 0;
+    private static double defaultFrictionS = 0;
 
     private Vector position;
     private Vector velocity;
     private double radius;
-
-    public Ball()
-    {
-        this(new Vector(), new Vector(), DEFAULT_RADIUS);
-    }
+    private double restitution;
+    private double frictionK;
+    private double frictionS;
 
     public Ball(double x, double y, double radius)
     {
         position = new Vector(x, y);
-        this.radius = radius;
         velocity = new Vector(0, 0);
+        this.radius = radius;
+        restitution = defaultRestitution;
+        frictionK = defaultFrictionK;
+        frictionS = defaultFrictionS;
     }
 
     public Ball(Vector position, Vector velocity, double radius)
@@ -31,6 +29,9 @@ public class Ball extends Entity implements Collidable
         this.position = position;
         this.velocity = velocity;
         this.radius = radius;
+        restitution = defaultRestitution;
+        frictionK = defaultFrictionK;
+        frictionS = defaultFrictionS;
     }
 
     public Vector getPos()
@@ -63,6 +64,36 @@ public class Ball extends Entity implements Collidable
         position = position.add(pos);
     }
 
+    public double getRestitution()
+    {
+        return restitution;
+    }
+
+    public double getKineticFriction()
+    {
+        return frictionK;
+    }
+
+    public double getStaticFriction()
+    {
+        return frictionS;
+    }
+
+    public void setRestitution(double r)
+    {
+        restitution = r;
+    }
+
+    public void setKineticFriction(double f)
+    {
+        frictionK = f;
+    }
+
+    public void setStaticFriction(double f)
+    {
+        frictionS = f;
+    }
+
     public double getRadius()
     {
         return radius;
@@ -80,18 +111,17 @@ public class Ball extends Entity implements Collidable
 
     public void tick()
     {
-        velocity = velocity.add(GRAVITY);
         double speed = velocity.getMagnitude();
         if (speed != 0)
         {
-            if (speed < STATIC_FRICTION)
+            if (speed < frictionS)
             {
                 velocity = new Vector(0, 0);
             }
             else
             {
                 double kineticFrictionScalar =
-                    (speed - KINETIC_FRICTION) / speed;
+                    (speed - frictionK) / speed;
                 velocity = velocity.scale(kineticFrictionScalar);
             }
             position = position.add(velocity);
@@ -114,6 +144,18 @@ public class Ball extends Entity implements Collidable
             if (otherCollidable instanceof Ball)
             {
                 Ball other = (Ball) otherCollidable;
+                double m1 = this.getMass();
+                double m2 = other.getMass();
+
+                Vector diff = this.getPos().subtract(other.getPos());
+                Vector unitDiff = diff.getUnitVector();
+                double thisChange = m2 / (m1 + m2);
+                double otherChange = m1 / (m1 + m2);
+                double distance = diff.getMagnitude();
+                double combinedRadius = this.getRadius() + other.getRadius();
+                double overlapDistance = combinedRadius - distance;
+                this.addPos(unitDiff.scale(thisChange * overlapDistance));
+                other.addPos(unitDiff.scale(-otherChange * overlapDistance));
 
                 Vector v1 = this.getVel();
                 Vector v2 = other.getVel();
@@ -122,16 +164,13 @@ public class Ball extends Entity implements Collidable
 
                 if (v2.subtract(v1).dotProduct(x2.subtract(x1)) < 0)
                 {
-                    double m1 = this.getMass();
-                    double m2 = other.getMass();
-
                     double s1 = 2 * m2 / (m1 + m2) * v1.subtract(v2)
-                        .scale(RESTITUTION).dotProduct(x1.subtract(x2))
+                        .scale(restitution).dotProduct(x1.subtract(x2))
                         / Math.pow(x1.subtract(x2).getMagnitude(), 2);
                     Vector u1 = v1.subtract(x1.subtract(x2).scale(s1));
 
                     double s2 = 2 * m1 / (m1 + m2) * v2.subtract(v1)
-                        .scale(RESTITUTION).dotProduct(x2.subtract(x1))
+                        .scale(restitution).dotProduct(x2.subtract(x1))
                         / Math.pow(x2.subtract(x1).getMagnitude(), 2);
                     Vector u2 = v2.subtract(x2.subtract(x1).scale(s2));
 
@@ -170,7 +209,7 @@ public class Ball extends Entity implements Collidable
             position = new Vector(bounds.getMinX() + radius, position.getY());
             if (velocity.getX() < 0)
             {
-                velocity = new Vector(-velocity.getX() * RESTITUTION,
+                velocity = new Vector(-velocity.getX() * restitution,
                     velocity.getY());
             }
         }
@@ -179,7 +218,7 @@ public class Ball extends Entity implements Collidable
             position = new Vector(bounds.getMaxX() - radius, position.getY());
             if (velocity.getX() > 0)
             {
-                velocity = new Vector(-velocity.getX() * RESTITUTION,
+                velocity = new Vector(-velocity.getX() * restitution,
                     velocity.getY());
             }
         }
@@ -190,7 +229,7 @@ public class Ball extends Entity implements Collidable
             if (velocity.getY() < 0)
             {
                 velocity = new Vector(velocity.getX(),
-                    -velocity.getY() * RESTITUTION);
+                    -velocity.getY() * restitution);
             }
         }
         else if (position.getY() > bounds.getMaxY() - radius)
@@ -199,7 +238,7 @@ public class Ball extends Entity implements Collidable
             if (velocity.getY() > 0)
             {
                 velocity = new Vector(velocity.getX(),
-                    -velocity.getY() * RESTITUTION);
+                    -velocity.getY() * restitution);
             }
         }
     }
@@ -211,5 +250,20 @@ public class Ball extends Entity implements Collidable
         result += "\nVelocity: " + velocity;
 
         return result;
+    }
+
+    public static void setDefaultRestitution(double r)
+    {
+        defaultRestitution = r;
+    }
+
+    public static void setDefaultKineticFriction(double f)
+    {
+        defaultFrictionK = f;
+    }
+
+    public static void setDefaultStaticFriction(double f)
+    {
+        defaultFrictionS = f;
     }
 }

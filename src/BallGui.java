@@ -36,6 +36,7 @@ public class BallGui extends JFrame
         ballPanel = new BallPanel(WIDTH, HEIGHT);
         BallPanelControlPanel controlPanel =
             new BallPanelControlPanel(ballPanel);
+        ballPanel.setControlPanel(controlPanel);
 
         add(ballPanel);
         add(controlPanel, BorderLayout.SOUTH);
@@ -44,7 +45,6 @@ public class BallGui extends JFrame
         setLocationRelativeTo(null);
 
         ballPanel.start();
-        controlPanel.updateButtons();
     }
 
     public void chooseSceneFile()

@@ -107,6 +107,29 @@ public class SceneSelector
                         {
                             addSystem(words, namedEntities);
                         }
+                        else if (words[0].equals("stop"))
+                        {
+                            panel.stop();
+                        }
+                        else if (words[0].equals("gravity") && words.length > 2)
+                        {
+                            setGravity(words);
+                        }
+                        else if (words[0].equals("restitution")
+                            && words.length > 1)
+                        {
+                            setRestitution(words);
+                        }
+                        else if (words[0].equals("kineticFriction")
+                            && words.length > 1)
+                        {
+                            setKineticFriction(words);
+                        }
+                        else if (words[0].equals("staticFriction")
+                            && words.length > 1)
+                        {
+                            setStaticFriction(words);
+                        }
                         else if (words[0].equals("seed") && words.length > 1)
                         {
                             try
@@ -258,5 +281,62 @@ public class SceneSelector
             }
         }
         panel.addEntity(system);
+    }
+
+    private void setGravity(String[] words)
+    {
+        try
+        {
+            double gx = Double.parseDouble(words[1]);
+            double gy = Double.parseDouble(words[2]);
+            panel.setGravity(new Vector(gx, gy));
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Invalid gravity parameters "
+                + words[1] + ", " + words[2]);
+        }
+    }
+
+    private void setRestitution(String[] words)
+    {
+        try
+        {
+            double restitution = Double.parseDouble(words[1]);
+            Ball.setDefaultRestitution(restitution);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Invalid restitution parameter "
+                + words[1]);
+        }
+    }
+
+    private void setKineticFriction(String[] words)
+    {
+        try
+        {
+            double friction = Double.parseDouble(words[1]);
+            Ball.setDefaultKineticFriction(friction);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Invalid friction parameter "
+                + words[1]);
+        }
+    }
+
+    private void setStaticFriction(String[] words)
+    {
+        try
+        {
+            double friction = Double.parseDouble(words[1]);
+            Ball.setDefaultStaticFriction(friction);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Invalid friction parameter "
+                + words[1]);
+        }
     }
 }

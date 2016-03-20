@@ -8,6 +8,14 @@ public abstract class Entity implements Tickable, Drawable
 
     public abstract double getMass();
 
+    public void addPos(Vector v)
+    {
+    }
+
+    public void addVel(Vector v)
+    {
+    }
+
     public void setPos(Vector position)
     {
     }

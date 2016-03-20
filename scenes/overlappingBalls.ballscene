@@ -1,0 +1,4 @@
+# Tests moving balls apart from each other when they overlap
+stop
+ball 250 300 0 0 50
+ball 450 300 0 0 200
