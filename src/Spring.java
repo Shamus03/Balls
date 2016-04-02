@@ -73,8 +73,8 @@ public class Spring extends Entity
     
     public double getEnergy()
     {
-        double springStretch = springLength
-            - b1.getPos().subtract(b2.getPos()).getMagnitude();
+        Vector difference = b1.getPos().subtract(b2.getPos());
+        double springStretch = difference.getMagnitude() - springLength;
         return .5 * springConstant * springStretch * springStretch;
     }
 
@@ -91,11 +91,12 @@ public class Spring extends Entity
 
         Vector difference = b1.getPos().subtract(b2.getPos());
 
-        Vector springAccel = difference.getUnitVector().scale(
-            springConstant * (springLength - difference.getMagnitude()));
+        Vector equilibrium = difference.getUnitVector().scale(springLength);
+        Vector springAccel =
+            equilibrium.subtract(difference).scale(springConstant);
         
-        b1.setVel(b1.getVel().add(springAccel.scale(1 / b1.getMass())));
-        b2.setVel(b2.getVel().subtract(springAccel.scale(1 / b2.getMass())));
+        b1.addVel(springAccel.scale(1 / b1.getMass()));
+        b2.addVel(springAccel.scale(-1 / b2.getMass()));
     }
 
     public void draw(Graphics g)
