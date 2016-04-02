@@ -18,6 +18,9 @@ public class BallPanel extends JPanel
     private Vector gravity;
     private BallPanelControlPanel controlPanel;
 
+    private double maxEnergy;
+    private double minEnergy;
+
     public BallPanel(int width, int height)
     {
         super();
@@ -27,7 +30,8 @@ public class BallPanel extends JPanel
         drawSystem = false;
         sceneSelector = new SceneSelector(this);
         gravity = new Vector(0, 0);
-
+        maxEnergy = Double.MIN_VALUE;
+        minEnergy = Double.MAX_VALUE;
         setPreferredSize(new Dimension(width, height));
 
         new Thread(new BallPanelDrawer()).start();
@@ -95,10 +99,21 @@ public class BallPanel extends JPanel
             system.draw(g);
         }
 
+        double curEnergy = getTotalEnergy();
+        maxEnergy = Math.max(curEnergy, maxEnergy);
+        minEnergy = Math.min(curEnergy, minEnergy);
+
         g.setColor(Color.BLACK);
         g.setXORMode(Color.WHITE);
-        g.drawString("Total Energy: " + getTotalEnergy(),
+        g.drawString("Total Energy: " + curEnergy,
             BORDER_WIDTH + 2, BORDER_WIDTH + 12);
+        
+        g.drawString("Maximum Energy: " + maxEnergy,
+            BORDER_WIDTH + 2, BORDER_WIDTH + 25);
+
+        g.drawString("Minimum Energy: " + minEnergy,
+            BORDER_WIDTH + 2, BORDER_WIDTH + 38);
+
         g.setPaintMode();
     }
 
