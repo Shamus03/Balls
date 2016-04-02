@@ -1,0 +1,5 @@
+# Two balls spinning
+drawSystem true
+ball 300 300 0 .2 40 b1
+ball 500 300 0 -.2 40 b2
+spring b1 b2 300

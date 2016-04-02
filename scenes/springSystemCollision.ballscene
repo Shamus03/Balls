@@ -5,7 +5,7 @@ drawSystem false
 ball 100 200 .2 0 50
 ball 425 200 0 0 75 b1
 ball 575 200 0 0 50 b2
-spring b1 b2 100
+spring b1 b2 1
 system b1 b2
 
 ball 100 400 .2 0 50
